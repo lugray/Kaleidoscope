@@ -27,6 +27,8 @@
 #include "kaleidoscope/hardware/avr/pins_and_ports.h"
 
 #include "kaleidoscope/hardware/ATMegaKeyboard.h"
+#define KALEIDOSCOPE_BOOTLOADER_FLIP 1
+#include "kaleidoscope/driver/Bootloader.h"
 
 namespace kaleidoscope {
 namespace hardware {
@@ -45,7 +47,12 @@ class KBD4x: public kaleidoscope::hardware::ATMegaKeyboard {
 
   static constexpr int8_t led_count = 0;
 
-  void resetDevice();
+  void resetDevice() {
+    bootloader_.resetDevice();
+  }
+
+ private:
+  kaleidoscope::driver::bootloader::avr::FLIP bootloader_;
 };
 
 #define KEYMAP(                                                                    \

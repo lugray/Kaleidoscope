@@ -34,6 +34,8 @@
 #include "kaleidoscope/hardware/avr/pins_and_ports.h"
 
 #include "kaleidoscope/hardware/ATMegaKeyboard.h"
+#define KALEIDOSCOPE_BOOTLOADER_FLIP 1
+#include "kaleidoscope/driver/Bootloader.h"
 
 namespace kaleidoscope {
 namespace hardware {
@@ -49,7 +51,14 @@ class Splitography: public kaleidoscope::hardware::ATMegaKeyboard {
     COL_PIN_LIST({ PIN_F0, PIN_F1, PIN_F4, PIN_F5, PIN_F6, PIN_F7, PIN_C7, PIN_C6, PIN_B6, PIN_B5, PIN_B4, PIN_D7 })
   );
 
+  void resetDevice() {
+    bootloader_.resetDevice();
+  }
+
   static constexpr int8_t led_count = 0;
+
+ private:
+  kaleidoscope::driver::bootloader::avr::FLIP bootloader_;
 };
 
 #define KEYMAP(                                                                    \
